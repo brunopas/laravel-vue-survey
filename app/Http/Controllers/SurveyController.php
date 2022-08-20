@@ -99,6 +99,12 @@ class SurveyController extends Controller
         }
 
         $survey->delete();
+
+        if ($survey->image) {
+            $absolutePath = public_path($survey->image);
+            File::delete($absolutePath);
+        }
+
         return response('', 204);
     }
 
@@ -119,7 +125,7 @@ class SurveyController extends Controller
                 throw new \Exception('base64_decode failed');
             }
         } else {
-            throw new \Exception('did not match ata URI with image data');
+            throw new \Exception('did not match data URI with image data');
         }
 
         $dir = 'surveys/images/';

@@ -205,7 +205,7 @@
 <script setup>
 import { v4 as uuidv4 } from "uuid";
 import store from "../store";
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import { SaveIcon, TrashIcon, ExternalLinkIcon } from "@heroicons/vue/solid";
@@ -217,19 +217,31 @@ import QuestionEditor from "../components/editor/QuestionEditor.vue";
 const router = useRouter();
 const route = useRoute();
 
+const surveyLoading = computed(() => store.state.currentSurvey.loading);
+
 let model = ref({
     title: "",
     status: false,
     description: null,
-    image: null,
+    image_url: null,
     expire_date: null,
     questions: [],
 });
 
+watch(
+    () => {
+        return store.state.currentSurvey.data;
+    },
+    (newVal, oldVal) => {
+        model.value = {
+            ...JSON.parse(JSON.stringify(newVal)),
+            status: newVal.status !== "draft",
+        };
+    }
+);
+
 if (route.params.id) {
-    model.value = store.state.surveys.find(
-        (s) => s.id === parseInt(route.params.id)
-    );
+    store.dispatch("getSurvey", route.params.id);
 }
 
 function onImageChoose(ev) {
@@ -277,6 +289,20 @@ function saveSurvey() {
             params: { id: data.data.id },
         });
     });
+}
+
+function deleteSurvey() {
+    if (
+        confirm(
+            "Are you sure you want to delete this survey? The operation can't be undone!!"
+        )
+    ) {
+        store.dispatch("deleteSurvey", model.value.id).then(() => {
+            router.push({
+                name: "Surveys",
+            });
+        });
+    }
 }
 </script>
 
