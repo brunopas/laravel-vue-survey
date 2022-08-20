@@ -22,7 +22,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@larasurveys.com',
         ]);
 
-        User::factory(10)->create();
-        Survey::factory(25)->create();
+        User::factory(9)->create();
+
+        for ($i = 1; $i <= 10; $i++) {
+            Survey::factory(25)->create([
+                'user_id' => $i
+            ]);
+        }
     }
 }

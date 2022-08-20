@@ -19,11 +19,10 @@ class SurveyFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => rand(1, 11),
             'image' => 'https://source.unsplash.com/random',
             'title' => fake()->sentence(),
             'status' => 1,
-            'description' => fake()->paragraph(2),
+            'description' => fake()->paragraph(rand(1, 5)),
             'expire_date' => fake()->dateTimeBetween('+1 day', '+1 year')
         ];
     }
