@@ -84,7 +84,7 @@ The following tools were used to build the project:
 -   **[VueJS](https://vuejs.org/)** >=3.2.25
 -   **[Vue Router](https://router.vuejs.org/)** >= 4.0.13
 -   **[Vuex](https://vuex.vuejs.org/)** >= 4.0.2
--   **[Axios]([0.27.2](https://axios-http.com/))** >= 0.27.2
+-   **[Axios](https://axios-http.com/)** >= 0.27.2
 -   **[Tailwind CSS](https://tailwindcss.com/)**
 -   **[MySQL](https://www.mysql.com/)**
 
