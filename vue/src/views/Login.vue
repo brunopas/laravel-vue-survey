@@ -9,7 +9,7 @@
             Sign in to your account
         </h2>
         <p class="mt-2 text-center text-sm text-gray-600">
-            Or
+            or
             <router-link
                 :to="{ name: 'Register' }"
                 class="font-medium text-indigo-600 hover:text-indigo-500"
@@ -41,7 +41,9 @@
                 </svg>
             </span>
         </Alert>
+
         <input type="hidden" name="remember" value="true" />
+
         <div class="rounded-md shadow-sm -space-y-px">
             <div>
                 <label for="email" class="sr-only">Email Address</label>

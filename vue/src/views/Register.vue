@@ -10,7 +10,7 @@
                 Register for free
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600">
-                Or
+                or
                 <router-link
                     :to="{ name: 'Login' }"
                     class="font-medium text-indigo-600 hover:text-indigo-500"
@@ -19,6 +19,7 @@
                 </router-link>
             </p>
         </div>
+
         <form class="mt-8 space-y-6" @submit="register">
             <Alert
                 v-if="Object.keys(errors).length"
@@ -32,6 +33,7 @@
             </Alert>
 
             <input type="hidden" name="remember" value="true" />
+
             <div class="rounded-md shadow-sm -space-y-px">
                 <TInput
                     name="name"
