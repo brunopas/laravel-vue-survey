@@ -2,16 +2,12 @@
     <div>
         <img
             class="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
             alt="Workflow"
         />
-
-        <h2
-            class="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900"
-        >
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
         </h2>
-
         <p class="mt-2 text-center text-sm text-gray-600">
             Or
             <router-link
@@ -22,16 +18,12 @@
             </router-link>
         </p>
     </div>
-
     <form class="mt-8 space-y-6" @submit="login">
-        <div
-            v-if="errorMessage"
-            class="flex item-center justify-between py-3 px-5 bg-red-500 text-white rounded"
-        >
-            {{ errorMessage }}
+        <Alert v-if="errorMsg">
+            {{ errorMsg }}
             <span
-                @click="errorMessage = ''"
-                class="w-8 h-8 flex items-center justify-center rounded-full transition-color cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
+                @click="errorMsg = ''"
+                class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,23 +31,22 @@
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
                 >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        stroke-width="2"
                         d="M6 18L18 6M6 6l12 12"
                     />
                 </svg>
             </span>
-        </div>
-
+        </Alert>
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
             <div>
-                <label for="email-address" class="sr-only">Email address</label>
+                <label for="email" class="sr-only">Email Address</label>
                 <input
-                    id="email-address"
+                    id="email"
                     name="email"
                     type="email"
                     autocomplete="email"
@@ -65,7 +56,6 @@
                     placeholder="Email address"
                 />
             </div>
-
             <div>
                 <label for="password" class="sr-only">Password</label>
                 <input
@@ -100,9 +90,9 @@
         </div>
 
         <div>
-            <button
-                type="submit"
-                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <TButtonLoading
+                :loading="loading"
+                class="w-full relative justify-center"
             >
                 <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                     <LockClosedIcon
@@ -110,40 +100,48 @@
                         aria-hidden="true"
                     />
                 </span>
-                Sign In
-            </button>
+                Sign in
+            </TButtonLoading>
         </div>
     </form>
 </template>
 
 <script setup>
 import { LockClosedIcon } from "@heroicons/vue/solid";
+
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+
 import store from "../store";
 
+import Alert from "../components/Alert.vue";
+import TButtonLoading from "../components/core/TButtonLoading.vue";
+
 const router = useRouter();
+
 const user = {
     email: "",
     password: "",
-    remember: false,
 };
 
-let errorMessage = ref("");
+let loading = ref(false);
+let errorMsg = ref("");
 
 function login(ev) {
     ev.preventDefault();
+    loading.value = true;
 
     store
         .dispatch("login", user)
-        .then((res) => {
+        .then(() => {
+            loading.value = false;
             router.push({
                 name: "Dashboard",
             });
         })
         .catch((err) => {
-            console.log(err);
-            errorMessage.value = err.response.data.error;
+            loading.value = false;
+            errorMsg.value = err.response.data.error;
         });
 }
 </script>
