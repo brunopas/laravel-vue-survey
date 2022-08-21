@@ -19,7 +19,7 @@ class SurveyFactory extends Factory
     public function definition()
     {
         return [
-            'image' => 'https://source.unsplash.com/random',
+            'image' => 'https://source.unsplash.com/random/?survey',
             'title' => fake()->sentence(),
             'status' => 1,
             'description' => fake()->paragraph(rand(1, 5)),
