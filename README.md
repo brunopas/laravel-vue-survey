@@ -79,7 +79,6 @@ $ php artisan serve
 The following tools were used to build the project:
 -   **[PHP](https://www.php.net/)** >= 8.0.2
 -   **[Laravel Framework](https://laravel.com/)** >= 9.19
--   **[Laravel Blade](https://laravel.com/)**
 -   **[Laravel Sanctum](https://laravel.com/)** >= 3.0
 -   **[VueJS](https://vuejs.org/)** >=3.2.25
 -   **[Vue Router](https://router.vuejs.org/)** >= 4.0.13
